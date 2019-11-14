@@ -52,7 +52,7 @@ router.get('/users/me', auth, async (req: any, res: Response) => {
 router.get('/users', auth, async (req: any, res: Response) => {
   User.find({}, function (err, docs) {
     if (!err) {
-      res.send(docs);
+      res.json(docs);
     } else { throw err; }
   });
 })
