@@ -1,10 +1,10 @@
 
 import http from "http";
 import express from "express";
-import { applyMiddleware } from "./utils";
+import { applyMiddleware, applyRoutes } from "./utils";
 import middleware from "./middleware";
 import errorHandlers from "./middleware/errorHandlers";
-import userRouter from "./services/user/routes";
+import routes from "./services";
 import mongoose from "mongoose";
 import { mongoDbUrl } from './config/db';
 
@@ -25,7 +25,7 @@ mongoose.connect(mongoDbUrl, {
 
 const router = express();
 applyMiddleware(middleware, router);
-router.use(userRouter);
+applyRoutes(routes, router);
 applyMiddleware(errorHandlers, router);
 
 const PORT = process.env.PORT;
