@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { User } from "../../models/User";
 import auth from "../../middleware/auth";
+import { findAllUsers } from "./UserController";
 
 const router = express.Router();
 
@@ -49,13 +50,11 @@ router.get('/users/me', auth, async (req: any, res: Response) => {
   res.send(req.user)
 })
 
-router.get('/users', auth, async (req: any, res: Response) => {
-  User.find({}, function (err, docs) {
-    if (!err) {
-      res.json(docs);
-    } else { throw err; }
-  });
-})
+router.get('/users', auth, async (req: Request, res: Response) => {
+  const result = await findAllUsers();
+
+  return res.json(result);
+});
 
 router.post('/users/me/logout', auth, async (req: any, res: Response) => {
   try {
